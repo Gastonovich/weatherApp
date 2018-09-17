@@ -10,20 +10,31 @@ class App extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        window.ActivatePlacesSearch = this.activatePlacesSearch.bind(this);
     }
     handleChange(event){
         this.setState({value: event.target.value});
     }
+    activatePlacesSearch(){
+        let input = document.getElementById('Search');
+        let autocomplete = new google.maps.places.Autocomplete(input);            
+    };
+    componentDidMount() {
+        const ApiKey = 'AIzaSyBNyF3ksrwtdU5-_hbC-m6PBbZJm78_MgI';
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${ApiKey}` + `&libraries=places&callback=window.ActivatePlacesSearch`;
+        script.async = true;
+        script.defer = true;
+        script.addEventListener('load', () => {
+          this.setState({ mapIsReady: true });
+        });    
+        document.body.appendChild(script);
+      }
     handleSubmit(event){
         console.log('A name was submitted: ' + this.state.value);
         event.preventDefault();
     }
-    componentDidMount(){
-        function activatePlacesSearch(){
-            let input = document.getElementById('Search');
-            let autocomplete = new google.maps.places.Autocomplete(input);
-          }; 
-    }
+ 
     render(){
         return(
             <div id="App">
