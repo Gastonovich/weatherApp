@@ -1,16 +1,21 @@
 import React,  { Component }  from "react";
 
-import Homer from "../assets/Homer.png"
+import OutputForm from './OutputForm';
+import Homer from "../assets/Homer.png";
 import style from "../styles/main.scss";
 
 class App extends Component {
     constructor(props){
         super(props);
-        this.state = {value: ''};
+        this.state = {
+            value: '',
+            firstView: true
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         window.ActivatePlacesSearch = this.activatePlacesSearch.bind(this);
+
     }
     handleChange(event){
         this.setState({value: event.target.value});
@@ -32,12 +37,14 @@ class App extends Component {
       }
     handleSubmit(event){
         console.log('A name was submitted: ' + this.state.value);
+        this.setState({firstView: false});
         event.preventDefault();
     }
  
     render(){
         return(
             <div id="App">
+                {this.state.firstView ?
                 <div className="inputForm">
                     <form onSubmit={this.handleSubmit}>
                         <h1>Let me help you with weather info</h1>
@@ -45,8 +52,11 @@ class App extends Component {
                                                        onChange={this.handleChange} />
                     </form>
                     <img src={Homer}></img>
+                </div> :
+                <div className="outputForm">
+                        <OutputForm city={this.state.value} />
                 </div>
-                <div className="outputForm"></div>
+                }
             </div>
         )
     }
