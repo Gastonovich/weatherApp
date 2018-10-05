@@ -22,4 +22,15 @@
         box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
         width:80%;
       }
+      .tempInfo{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        div{
+          border:1px solid black;
+          padding: 1em;
+          margin:1em;
+          height: 100%;
+        }
+      }
     }
