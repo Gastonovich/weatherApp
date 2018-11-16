@@ -1,35 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>React and Webpack4</title>
-  </head>
-  <body>
-    <section id="index"></section> 
-    <script>
-      function accuWeather(city){
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://dataservice.accuweather.com/locations/v1/cities/search?apikey=feAuAmMuAeLKM6I6pfR9dKMVpeNs4VC7&q=' + city, false);
-        xhr.send();
-        if (xhr.status != 200) {
-        console.log('troubles');
-        } else {
-        console.log('ok');
-        }
-        let JSON = JSON.parse(xhr.responseText); //improve
-        let cityCode = JSON[0].ParentCity.Key;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/'+ cityCode +'?apikey=feAuAmMuAeLKM6I6pfR9dKMVpeNs4VC7&language=en-us&details=false&metric=false', false);
-        xhr.send();
-        if (xhr.status != 200) {
-        console.log('troubles');
-        } else {
-        console.log(xhr.responseText);
-        }
-      }
-    </script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>React and Webpack4</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+</head>
+
+<body>
+  <section id="index"></section>
+</body>
+
 </html>
