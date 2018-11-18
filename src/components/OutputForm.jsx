@@ -38,7 +38,6 @@ class OutputForm extends Component {
       }&APPID=0a19e6cb59f156de48afcbb508393211&units=metric`
     );
     const jsonOpenWeather = await responseOpenweather.json();
-
     DarkSkyApi.apiKey = '01d0076d0ab578b6e7097b56ba38029f';
     DarkSkyApi.units = 'si';
     const responseDarkSky = await DarkSkyApi.loadForecast(position);
@@ -48,6 +47,7 @@ class OutputForm extends Component {
       seaLevel: jsonOpenWeather.list[0].main.sea_level,
       pressure: jsonOpenWeather.list[0].main.pressure,
       visibility: responseDarkSky.daily.data[0].visibility,
+      icon: jsonApixu.current.condition.icon,
       day: {
         wind: jsonAccu.DailyForecasts[0].Day.Wind.Speed.Value,
         phrase: jsonAccu.DailyForecasts[0].Day.IconPhrase
@@ -71,10 +71,10 @@ class OutputForm extends Component {
         moonset: jsonApixu.forecast.forecastday[0].astro.moonset,
         moonPhase: responseDarkSky.daily.data[0].moonPhase
       },
-      summary: jsonApixu.current.condition.text,
-      icon: jsonApixu.current.condition.text.icon
+      summaryForWeek: responseDarkSky.daily.summary,
+      summaryToday: responseDarkSky.daily.data[0].summary,
+      summaryTomorrow: responseDarkSky.daily.data[1].summary
     };
-    console.log(response);
     this.setState({
       forecast: response,
       loading: false
@@ -83,36 +83,71 @@ class OutputForm extends Component {
 
   render() {
     const { forecast, loading } = this.state;
+
     return (
       <div>
         {loading ? (
           <div>Loading</div>
         ) : (
           <div>
-            <h1>{this.props.city}</h1>
-            <div className="generalInfo">
+            <section>
+              <div className="header">
+                <h1>{this.props.city}</h1>
+                <img src={'http://' + forecast.icon.slice(2)} alt="weather icon" />
+              </div>
               <div className="summary">
-                <p>{forecast.summary}</p>
-              </div>
-              <div className="temperature">
-                <div className="tabs">
-                  <p>Current</p>
-                  <p>{forecast.temperature.current}</p>
-                  <p>
-                    {forecast.temperature.min} - {forecast.temperature.max}
-                  </p>
+                <div className="summary_today">{forecast.summaryToday}</div>
+                <div className="summary_today">Tomorrow will be {forecast.summaryTomorrow}</div>
+                <div className="summary_today">
+                  On this week should wait {forecast.summaryForWeek}
                 </div>
-                <div className="tabs">
-                  <p>Feels Like</p>
-                  <p>{forecast.temperature.feelsLikeCurrent}</p>
+              </div>
+              <div className="mainInfo">
+                <h2>Temperature</h2>
+                <div className="temperature_block">
+                  <p> Now : {forecast.temperature.current}°</p>
+                  <p>Feels like : {forecast.temperature.feelsLikeCurrent}°</p>
                   <p>
-                    {forecast.temperature.realFeelMin} - {forecast.temperature.realFeelMax}
+                    Minimum - Maximum : {forecast.temperature.min}° - {forecast.temperature.max}°
                   </p>
                 </div>
               </div>
-            </div>
-            <button>More Details</button>
-            <button onClick={this.props.changer}>Search Anouther City</button>
+
+              <div className="details">
+                <h2>Details</h2>
+                <div className="details_block">
+                  <div>
+                    <p>Visibility: {forecast.humidity}</p>
+                  </div>
+                  <div>
+                    <p>Humidity: {forecast.humidity}</p>
+                  </div>
+                  <div>
+                    <p>Pressure: {forecast.pressure}</p>
+                  </div>
+                  <div>
+                    <p>Sunrise: {forecast.astro.sunrise}</p>
+                  </div>
+                  <div>
+                    <p>Sunset: {forecast.astro.sunset}</p>
+                  </div>
+                  <div>
+                    <p>Moon Phase: {forecast.astro.moonPhase}</p>
+                  </div>
+                  <div className="wind">
+                    <p>
+                      Wind at day {forecast.day.wind}
+                      km/h and at night {forecast.night.wind}
+                      km/h
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <button className="rainbow-button" onClick={this.props.changer}>
+              Search another city
+            </button>
           </div>
         )}
       </div>
