@@ -1,3 +1,4 @@
 # weatherApp - выводит подробную информацию о погоде в интересующем Вас городе
-Hint - please, write city name on English 
+Hint - please, write city name on English.
+
 Цель приложения - ближе познакомиться с работой c API и настройкой окружения с помощью WebPack
