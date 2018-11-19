@@ -8,8 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Kiev',
-      firstView: false
+      value: '',
+      firstView: true
     };
 
     this.handleChange = this.handleChange.bind(this);

@@ -108,7 +108,7 @@ class OutputForm extends Component {
                   <p> Now : {forecast.temperature.current}°</p>
                   <p>Feels like : {forecast.temperature.feelsLikeCurrent}°</p>
                   <p>
-                    Minimum - Maximum : {forecast.temperature.min}° - {forecast.temperature.max}°
+                    Minimum - Maximum : {forecast.temperature.min}° — {forecast.temperature.max}°
                   </p>
                 </div>
               </div>
@@ -117,7 +117,7 @@ class OutputForm extends Component {
                 <h2>Details</h2>
                 <div className="details_block">
                   <div>
-                    <p>Visibility: {forecast.humidity}</p>
+                    <p>Visibility: {forecast.visibility}</p>
                   </div>
                   <div>
                     <p>Humidity: {forecast.humidity}</p>
